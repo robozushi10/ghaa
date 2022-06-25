@@ -1,16 +1,18 @@
 #!/usr/bin/env node
+const core = require('@actions/core');
+const github = require('@actions/github');
 const fs = require('fs');
 const readline = require('readline');
 
-console.log(`----------------------------------------------------------------`);
-console.log(`引数チェック`);
-for(let i = 0; i < process.argv.length; i++){
-  console.log(`process.argv[${i}] => <${process.argv[i]}>`);
-}
+// console.log(`----------------------------------------------------------------`);
+// console.log(`引数チェック`);
+// for(let i = 0; i < process.argv.length; i++){
+//   console.log(`process.argv[${i}] => <${process.argv[i]}>`);
+// }
 
 console.log(`----------------------------------------------------------------`);
 console.log(`一行ずつ処理をするために readline を準備する`);
-const fname = process.argv[2]
+const fname = core.getInput('log');
 const rs = fs.createReadStream(fname);
 const rl = readline.createInterface({
   input: rs,
