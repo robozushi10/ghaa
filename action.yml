@@ -1,7 +1,8 @@
 name: gcov pass check
 runs:
   using: "node12"
-  main: "judge-gcov.js"
+# main: "judge-gcov.js"
+  main: "index.js"
 inputs:
   log:
     description: 'gcov -b log'
