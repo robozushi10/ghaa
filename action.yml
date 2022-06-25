@@ -1,0 +1,12 @@
+name: gcov pass check
+runs:
+  using: "node12"
+  main: "judge-gcov.js"
+inputs:
+  log:
+    description: 'gcov -b log'
+    required: true
+outputs:
+  pass:
+    description: 'pass/fail'
+
