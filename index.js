@@ -3,4 +3,5 @@ const github = require('@actions/github');
 
 console.log("Hello, World!");
 const fname = core.getInput('log');
-console.log("fname => <${fname}>");
+console.log(`fname ==> <${fname}>`);
+
