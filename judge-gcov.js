@@ -4,9 +4,6 @@ const github = require('@actions/github');
 const fs = require('fs');
 const readline = require('readline');
 
-console.log("Hello, World!");
-
-
 // console.log(`----------------------------------------------------------------`);
 // console.log(`引数チェック`);
 // for(let i = 0; i < process.argv.length; i++){
