@@ -20,7 +20,7 @@ const rl = readline.createInterface({
 });
 
 //! 下記 H_GC を保持するための配列
-let L = []
+let L = [];
 
 //! ファイルごとにカバレッジ率を保持するためのハッシュ
 let H_GC = {
@@ -28,14 +28,14 @@ let H_GC = {
   'lines':    { 'val': null, 'pass': true },
   'branches': { 'val': null, 'pass': true },
   'calls':    { 'val': null, 'pass': true },
-}
+};
 
 //! カバレッジ率合格となる閾値を保持するハッシュ
 let H_TH = {
   'lines':    80,
   'branches': 10,
   'calls':    90,
-}
+};
 
 //! カバレッジ率が合格とみなすための閾値
 
@@ -46,41 +46,41 @@ rl.on('line', function(l) {
     // 空行だった場合
     console.log(`[DEBUG:10] L == ''`);
     if('file' in H_GC){
-      console.log(`[DEBUG:11] L.push(H_GC)`)
+      console.log(`[DEBUG:11] L.push(H_GC)`);
       //! 解析したハッシュを deepcopy をして、配列に格納する
-      L.push(Object.assign({}, H_GC))
+      L.push(Object.assign({}, H_GC));
     }
     //! ハッシュH_GC の要素をクリアしてやる
-    delete H_GC
+    delete H_GC;
     //! 新たなオブジェクトを獲得する
     H_GC = {
       'file': null,
       'lines':    { 'val': null, 'pass': true },
       'branches': { 'val': null, 'pass': true },
       'calls':    { 'val': null, 'pass': true },
-    }
+    };
     console.log(``);
-    console.log(L)
+    console.log(L);
   } else {
     var m = l.match(/File '(.*)'/);
     if(m != null){
       console.log(`[DEBUG:01] FILE: ${m[1]}`);
-      H_GC['file'] = m[1]
+      H_GC['file'] = m[1];
     }
     var m = l.match(/Lines executed:(.*)% of (.*)/);
     if(m != null){
       console.log(`[DEBUG:02] LINES: ${m[1]}`);
-      H_GC['lines']['val'] = parseFloat(m[1])
+      H_GC['lines']['val'] = parseFloat(m[1]);
     }
     var m = l.match(/Branches executed:(.*)% of (.*)/);
     if(m != null){
       console.log(`[DEBUG:03] BRANCHES: ${m[1]}`);
-      H_GC['branches']['val'] = parseFloat(m[1])
+      H_GC['branches']['val'] = parseFloat(m[1]);
     }
     var m = l.match(/Calls executed:(.*)% of (.*)/);
     if(m != null){
       console.log(`[DEBUG:04] CALLS: ${m[1]}`);
-      H_GC['calls']['val'] = parseFloat(m[1])
+      H_GC['calls']['val'] = parseFloat(m[1]);
     }
   }
 });
@@ -89,14 +89,18 @@ rl.on('line', function(l) {
 //! rl.on('close', 〜) を使って読み出しをすること
 rl.on('close', function(){
   for(let a of L){
+    core.setOutput('pass', true);
     if(a.lines.val < H_TH.lines){
       a.lines.pass = false;
+      core.setOutput('pass', false);
     }
     if(a.branches.val < H_TH.branches){
       a.branches.pass = false;
+      core.setOutput('pass', false);
     }
     if(a.calls.val < H_TH.calls){
       a.calls.pass = false;
+      core.setOutput('pass', false);
     }
   }
 
